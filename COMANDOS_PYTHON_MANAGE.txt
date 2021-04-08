@@ -1,0 +1,8 @@
+
+COMANDOS INTERNOS DO DJANGO 3
+
+1 - python manage.py makemigrations -> Criar as migrations 
+2 - python manage.py migrate -> Roda as migrations
+3 - python manage.py clear_cache -> Limpar o cache (pip install clear_cache)
+4 - python manage.py sqlmigrate cursos 0001_initial -> Mostrar a estrutura sql da tabela do app
+5 - 

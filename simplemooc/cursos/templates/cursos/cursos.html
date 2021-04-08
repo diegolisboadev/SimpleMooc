@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block titulo %} Cursos {% endblock titulo %}
+
+{% block conteudo %}
+    
+<div class="pure-g-r content-ribbon">
+    <div class="pure-u-1">
+        <div class="l-box">
+            <h3 class="content-subhead">Listagem de Cursos do SimpleMOOC</h3>
+            <p>Abaixo a lista de cursos disponíveis na plataforma</p>
+        </div>
+    </div>
+</div>
+
+{% for c in cursos %}
+
+    <div class="pure-g-r content-ribbon">
+        <div class="pure-u-1-2">
+            <div class="l-box">
+                {% if c.imagem %}
+                    <a href="{% url 'c.slug' pk=pk %}">
+                        <img src="{{ c.imagem.url }}" alt="{{ c.nome|title }}" />
+                    </a>
+                {% else %}
+                     <a href="#">
+                        <img src="{% static 'images/image_default.png' %}" alt="{{ c.nome|title }}" />
+                    </a>
+                {% endif %}
+            </div>
+        </div>
+        <div class="pure-u-2-3">
+            <div class="l-box">
+                <h4 class="content-subhead"><a href="#" title="{{  c.nome|title  }}">{{ c.nome|title }}</a></h4>
+                <br>
+                <p>{{ c.descricao|linebreaks }}</p><!-- Quebrar o texto caso tenha paragrafos ou quebras de linha -->
+            </div>
+        </div>
+    </div>
+
+{% empty %}
+
+    <div class="pure-g-r content-ribbon">
+        <div class="pure-u-2-3">
+            <div class="l-box">
+                <h4 class="content-subhead">Não Há Cursos Cadastrados</h4>
+                <p></p>
+            </div>
+        </div>
+    </div>
+
+{% endfor %}
+
+{% endblock conteudo %}
