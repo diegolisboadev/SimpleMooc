@@ -15,6 +15,7 @@ body {
 }
 .header .pure-menu {
     padding: 0.5em;
+    background: #191818;
 }
 .header .pure-menu li a:hover,
 .header .pure-menu li a:focus {

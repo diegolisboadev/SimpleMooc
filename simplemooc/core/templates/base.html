@@ -8,19 +8,20 @@
     <title>MOOC - {% block titulo %}{% endblock  %}</title>
     <link rel="shortcut icon" href="{% static 'images/coursera-icon.jpg' %}">
     <link rel="stylesheet" href="https://unpkg.com/purecss@2.0.5/build/pure-min.css">
+    <link rel="stylesheet" href="https://unpkg.com/purecss@2.0.5/build/grids-responsive-min.css" />
     <link rel="stylesheet" href="{% static 'css/styles.min.css' %}" />
 </head>
 <body>
 <div class="content">
     <div class="header">
-       <div class="pure-menu pure-menu-horizontal">
+       <div class="pure-menu pure-menu-horizontal" id="menu">
             <a href="{% url 'core:home' %}" class="pure-menu-heading pure-menu-link">SIMPLE MOOC</a>
             <ul class="pure-menu-list">
                 <li class="pure-menu-item">
                     <a href="{% url 'core:home' %}" class="pure-menu-link">Inicio</a>
                 </li>
                 <li class="pure-menu-item">
-                    <a href="#" class="pure-menu-link">Cursos</a>
+                    <a href="{% url 'cursos:cursos' %}" class="pure-menu-link">Cursos</a>
                 </li>
                 <li class="pure-menu-item">
                     <a href="{% url 'core:contato' %}" class="pure-menu-link">Contato</a>
