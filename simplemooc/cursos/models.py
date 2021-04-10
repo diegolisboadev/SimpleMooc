@@ -30,8 +30,13 @@ class Cursos(models.Model):
     # Alterar o nome dos objetos do Curso na Aplicação View e Admin
     def __str__(self):
         return self.nome
-    
 
+    # Recebe a var setada e gerar uma url_absolute
+    def get_absolute_url(self):
+        from django.urls import reverse
+        return reverse("cursos:detalhes_cursos", kwargs={"slug": self.slug})
+        #return reverse("model_detail", kwargs={"pk": self.pk})
+    
     # Class Meta
     class Meta:
         db_table = 'tb_mooc_cursos'

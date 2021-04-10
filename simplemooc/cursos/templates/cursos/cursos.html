@@ -21,7 +21,7 @@
         <div class="pure-u-1-2">
             <div class="l-box">
                 {% if c.imagem %}
-                    <a href="{% url 'c.slug' pk=pk %}">
+                    <a href="{{ c.get_absolute_url }}"><!-- Absolute URL or url 'cursos:detalhes_cursos slug=c.slug' -->
                         <img src="{{ c.imagem.url }}" alt="{{ c.nome|title }}" />
                     </a>
                 {% else %}
@@ -33,7 +33,7 @@
         </div>
         <div class="pure-u-2-3">
             <div class="l-box">
-                <h4 class="content-subhead"><a href="#" title="{{  c.nome|title  }}">{{ c.nome|title }}</a></h4>
+                <h4 class="content-subhead"><a href="{{  c.get_absolute_url }}" title="{{  c.nome|title  }}">{{ c.nome|title }}</a></h4>
                 <br>
                 <p>{{ c.descricao|linebreaks }}</p><!-- Quebrar o texto caso tenha paragrafos ou quebras de linha -->
             </div>
