@@ -55,29 +55,22 @@
     <div class="pure-u-1">
         <h3>Tire sua dúvida sobre o Curso</h3>
         
-        <form action="#contato" class="pure-form pure-form-aligned" method="post">
-            <input type='hidden' name='csrfmiddlewaretoken' value='ufiu9LQlViZzu6XDLjs8YbvDBs6kCgoD' />
+        <form action="#" class="pure-form pure-form-aligned" method="POST" accept-charset="utf-8">
+            {% csrf_token %}
             <fieldset>
-                
-                <div class="pure-control-group">
-                    <label for="id_name">Nome:</label>
-                    <input id="id_name" maxlength="100" name="name" type="text" />
-                    
-                </div>
-                
-                <div class="pure-control-group">
-                    <label for="id_email">E-mail:</label>
-                    <input id="id_email" name="email" type="email" />
-                    
-                </div>
-                
-                <div class="pure-control-group">
-                    <label for="id_message">Mensagem/Dúvida:</label>
-                    <textarea cols="40" id="id_message" name="message" rows="10">
-</textarea>
-                    
-                </div>
-                
+                {% for f in formContato %}
+                    <div class="pure-control-group">
+                        {{ f.label_tag }}
+                        {{ f }}
+                        {% if f.errors %}
+                            <ul class="errorlist">
+                                {% for error in f.errors %}
+                                    <li>{{ error }}</li>
+                                {% endfor %}
+                            </ul>
+                        {% endif %}
+                    </div>
+                {% endfor %}
                 <div class="pure-controls">
                     <button type="submit" class="pure-button pure-button-primary">Enviar</button>
                 </div>
