@@ -11,14 +11,16 @@ def cursos(request):
 
 def detalhes_curso(request, slug): #pk
     # get_object_or_404() -> Retornar o objeto caso exista se não retornar a page 404
+    curso = get_object_or_404(Cursos, slug=slug)
     if request.method == 'POST':
         formContato = ContatoCursoForm(request.POST)
 
         if formContato.is_valid():
+            formContato.send_email(curso)
             print(formContato.cleaned_data)
     else:
         formContato = ContatoCursoForm()
     return render(request, 'cursos/detalhes.html', {
-            'curso': get_object_or_404(Cursos, slug=slug),
+            'curso': curso,
             'formContato': formContato
     }) #pk=pk
