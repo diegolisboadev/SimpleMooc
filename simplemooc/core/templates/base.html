@@ -14,17 +14,20 @@
 <body>
 <div class="content">
     <div class="header">
-       <div class="pure-menu pure-menu-horizontal" id="menu">
+       <div class="home-menu pure-menu pure-menu-open pure-menu-horizontal pure-menu-fixed" id="menu">
             <a href="{% url 'core:home' %}" class="pure-menu-heading pure-menu-link">SIMPLE MOOC</a>
             <ul class="pure-menu-list">
                 <li class="pure-menu-item">
                     <a href="{% url 'core:home' %}" class="pure-menu-link">Inicio</a>
                 </li>
                 <li class="pure-menu-item">
-                    <a href="{% url 'cursos:cursos' %}" class="pure-menu-link">Cursos</a>
+                    <a href="{% url 'cursos:curso' %}" class="pure-menu-link">Cursos</a>
                 </li>
                 <li class="pure-menu-item">
                     <a href="{% url 'core:contato' %}" class="pure-menu-link">Contato</a>
+                </li>
+                <li class="pure-menu-item">
+                    <a href="{% url 'contas:entrar' %}" class="pure-menu-link">Entrar</a>
                 </li>
             </ul>
         </div>

@@ -37,9 +37,11 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    
     'clear_cache',
     'core',
-    'cursos'
+    'cursos',
+    'contas'
 ]
 
 MIDDLEWARE = [
@@ -129,6 +131,13 @@ USE_TZ = True
 STATIC_URL = '/static/' 
 MEDIA_ROOT = BASE_DIR / 'media/'
 MEDIA_URL = '/media/'
+
+# Constantes de Login da Aplicação
+
+# Login url
+LOGIN_URL = 'contas:entrar' # Define a rota de retorno caso erro no login
+LOGIN_REDIRECT_URL = 'core:home' # Define a rota redirecionamento apos o login
+LOGOUT_URL = 'contas:logout' # Define a rota de logout da aplicação
 
 # Envio de Email Django
 #EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
