@@ -26,9 +26,15 @@
                 <li class="pure-menu-item">
                     <a href="{% url 'core:contato' %}" class="pure-menu-link">Contato</a>
                 </li>
-                <li class="pure-menu-item">
-                    <a href="{% url 'contas:entrar' %}" class="pure-menu-link">Entrar</a>
-                </li>
+                {% if user.is_authenticated %}
+                    <li class="pure-menu-item">
+                        <a href="{% url 'contas:sair' %}" class="pure-menu-link">Sair</a>
+                    </li>
+                {% else %}
+                    <li class="pure-menu-item">
+                        <a href="{% url 'contas:entrar' %}" class="pure-menu-link">Entrar</a>
+                    </li>
+                {% endif %}
             </ul>
         </div>
     </div>

@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% block titulo %} Cadastro {% endblock titulo %}
+
+{% block conteudo %}
+
+    <div class="content">
+        <div class="pure-g-r content-ribbon">
+            <div class="pure-u-1">
+                <h2>Informe seus dados de cadastro</h2>
+                <form class="pure-form pure-form-stacked" method="post" accept-charset='utf-8'>
+                    {% csrf_token %}
+                    <fieldset>
+                        {{ form.non_field_errors }}<!--Mostrar todos os erros no campos - caso houver-->
+
+                        {% for f in form %}
+                            <div class="pure-control-group">
+                                {{ f.label_tag }}
+                                {{ f }}
+                                {{ f.errors }}
+                            </div>
+                        {% endfor %}
+                        
+                        <div class="pure-controls">
+                            <button type="submit" class="pure-button pure-button-primary">Cadastrar</button>
+                        </div>
+                    </fieldset>
+                    <p>
+                        Não é cadastrado? <a href="{% url 'contas:registrar' %}" title="">Cadastre-se</a> <br />
+                        Esqueceu a senha? <a href="#" title="">Nova senha</a> <br />
+                    </p>
+                </form>
+            </div>
+        </div>
+    </div>
+
+{% endblock conteudo %}

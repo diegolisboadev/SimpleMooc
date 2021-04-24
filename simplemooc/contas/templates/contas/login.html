@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block titulo %}Entrar{% endblock titulo %}
+
+{% block conteudo %}
+
+<div class="content">
+    <div class="pure-g-r content-ribbon">
+        <div class="pure-u-1">
+            <h2>Informe seus dados de Login</h2>
+            <form class="pure-form pure-form-stacked" method="post">
+                {% csrf_token %}
+                <fieldset>
+                    {{ form.non_field_errors }}<!--Mostrar todos os erros no campos - caso houver-->
+
+                    {% for f in form %}
+                        <div class="pure-control-group">
+                            {{ f.label_tag }}
+                            {{ f }}
+                            {{ f.errors }}
+                        </div>
+                    {% endfor %}
+                    
+
+                    <div class="pure-controls">
+                        <button type="submit" class="pure-button pure-button-primary">Entrar</button>
+                    </div>
+                </fieldset>
+                <p>
+                    Não é cadastrado? <a href="{% url 'contas:registrar' %}" title="Cadastra-se">Cadastre-se</a> <br />
+                    Esqueceu a senha? <a href="#" title="Alterar Senha">Nova senha</a> <br />
+                </p>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+{% endblock conteudo %}
