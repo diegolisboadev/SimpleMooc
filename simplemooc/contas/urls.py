@@ -1,12 +1,15 @@
 from django.urls import path, include
 from django.contrib.auth.views import LoginView
 from django.contrib.auth.views import LogoutView
-from .views import register
+from .views import register, dashboard, editar
 
 app_name = 'contas' # Necessário para usar o namespace na url principal
 urlpatterns = [
+    path('', dashboard, name="dashboard"),
+    #path('editar/', LoginView.as_view(templ), name="editar"),
     path('entrar/', LoginView.as_view(template_name='contas/login.html'), name="entrar"),
     path('cadastre-se/', register, name="registrar"),
+    path('editar/', LoginView, name="editar"),
     path('sair/', LogoutView.as_view(next_page='core:home'), name="sair")
 ]
 

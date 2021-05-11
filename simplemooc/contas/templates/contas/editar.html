@@ -1,0 +1,27 @@
+{% extends "contas/dashboard.html" %}
+
+{% block breadcrumb %}
+    {{ block.super }}
+    <li>/</li>
+    <li><a href="{% url 'contas:editar' %}">Editar Conta</a></li>
+{% endblock %}
+
+{% block dashboard_content %}
+        <div class="inner">
+            <form class="pure-form pure-form-stacked" method="post">
+                {% csrf_token %}
+                    {{ form.non_field_errors }} <!-- Erros não associados a nenhum campo do form (Não dispara) -->
+                    {% for f in form  %}
+                        <div class="pure-control-group">
+                            {{ f.label_tag }}
+                            {{ f }}
+                            {{ f.errors }}
+                        </div>
+                    {% endfor %}
+
+                    <div class="pure-controls">
+                        <button type="submit" class="pure-button pure-button-primary">Enviar</button>
+                    </div>
+            </form>
+        </div>
+{% endblock dashboard_content %}

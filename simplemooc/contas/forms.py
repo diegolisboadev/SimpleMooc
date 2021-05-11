@@ -27,3 +27,22 @@ class RegisterForm(UserCreationForm):
         if commit:
             user.save()
         return user
+
+class EditAccountForm(forms.ModelForm):
+    """ModelForm - serve para gerar um form automaticamente
+    do Model na view sem precisar repetir os campos em um form - forms.py
+
+    Obs. queryset -> buscar usuários com o respectivo menos o user atual
+
+    Args:
+        forms ([type]): [description]
+    """
+    def clean_email(self):
+        email = self.cleaned_data['email']
+        if User.objects.filter(email=email).exclude(pk=self.instance.pk).exists():
+            raise forms.ValidationError('Já existe usuário com este E-mail')
+        return email
+
+    class Meta:
+        model = User
+        fields = ['username', 'email', 'first_name', 'last_name']

@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block titulo %}Minha Área{% endblock titulo %}
+
+{% block conteudo %}
+
+
+ <div class="pure-g-r content-ribbon">
+        <div class="pure-u-1">
+            <ul class="breadcrumb">
+                {% block breadcrumb %}
+                    <li><a href="{% url 'contas:dashboard' %}">Meu Painel</a></li>
+                {% endblock breadcrumb %}
+            </ul>
+        </div>
+        <div class="pure-menu custom-restricted-width">
+            <span class="pure-menu-heading">Minha Área</span>
+            <ul class="pure-menu-list">
+                <li class="pure-menu-item">
+                    <a href="#" class="pure-menu-link"> 
+                        Bem-vindo, {{ user|title }}
+                        <br>
+                        Email, {{ user.email }}
+                    </a>
+                </li>
+                <li class="pure-menu-heading">Meus Cursos</li>
+                <li class="pure-menu-item">
+                    <a href="#" class="pure-menu-link">Games</a>
+                </li>
+                <li class="pure-menu-heading">Conta</li>
+                <li class="pure-menu-item">
+                    <a href="{% url 'contas:editar' %}" class="pure-menu-link">Editar Conta</a>
+                </li>
+                <li class="pure-menu-item">
+                    <a href="#" class="pure-menu-link">Editar Senha</a>
+                </li>
+            </ul>
+        </div>
+        <div class="pure-u-2-3">
+            <div class="inner">
+                {% block dashboard_content %}{% endblock dashboard_content %}
+            </div>
+        </div>
+    </div>
+
+
+{% endblock conteudo %}

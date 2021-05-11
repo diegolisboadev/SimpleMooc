@@ -28,6 +28,9 @@
                 </li>
                 {% if user.is_authenticated %}
                     <li class="pure-menu-item">
+                        <a href="{% url 'contas:dashboard' %}" class="pure-menu-link">Painel</a>
+                    </li>
+                    <li class="pure-menu-item">
                         <a href="{% url 'contas:sair' %}" class="pure-menu-link">Sair</a>
                     </li>
                 {% else %}
