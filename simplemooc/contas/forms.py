@@ -1,5 +1,5 @@
 from django import forms
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import UserCreationForm, PasswordChangeForm
 from django.contrib.auth.models import User
 
 class RegisterForm(UserCreationForm):
@@ -38,6 +38,16 @@ class EditAccountForm(forms.ModelForm):
         forms ([type]): [description]
     """
     def clean_email(self):
+        """ Clean campo email 
+            metodo para validar o email
+            caso existar em algum registro 
+            excluido a verificão no user atual
+        Raises:
+            forms.ValidationError: [description]
+
+        Returns:
+            [type]: [description]
+        """
         email = self.cleaned_data['email']
         if User.objects.filter(email=email).exclude(pk=self.instance.pk).exists():
             raise forms.ValidationError('Já existe usuário com este E-mail')

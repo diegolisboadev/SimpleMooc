@@ -16,13 +16,6 @@
         <div class="pure-menu custom-restricted-width">
             <span class="pure-menu-heading">Minha Área</span>
             <ul class="pure-menu-list">
-                <li class="pure-menu-item">
-                    <a href="#" class="pure-menu-link"> 
-                        Bem-vindo, {{ user|title }}
-                        <br>
-                        Email, {{ user.email }}
-                    </a>
-                </li>
                 <li class="pure-menu-heading">Meus Cursos</li>
                 <li class="pure-menu-item">
                     <a href="#" class="pure-menu-link">Games</a>
@@ -32,13 +25,17 @@
                     <a href="{% url 'contas:editar' %}" class="pure-menu-link">Editar Conta</a>
                 </li>
                 <li class="pure-menu-item">
-                    <a href="#" class="pure-menu-link">Editar Senha</a>
+                    <a href="{% url 'contas:editar_senha' %}" class="pure-menu-link">Editar Senha</a>
                 </li>
             </ul>
         </div>
         <div class="pure-u-2-3">
             <div class="inner">
-                {% block dashboard_content %}{% endblock dashboard_content %}
+                {% block dashboard_content %}
+                    <strong>Bem-vindo</strong>, {{ user|title }}
+                    <br>
+                    <strong>Email </strong>, {{ user.email }}
+                {% endblock dashboard_content %}
             </div>
         </div>
     </div>

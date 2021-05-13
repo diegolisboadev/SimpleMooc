@@ -1,7 +1,7 @@
 from django.urls import path, include
 from django.contrib.auth.views import LoginView
 from django.contrib.auth.views import LogoutView
-from .views import register, dashboard, editar
+from .views import register, dashboard, editar, editar_senha
 
 app_name = 'contas' # Necessário para usar o namespace na url principal
 urlpatterns = [
@@ -9,7 +9,8 @@ urlpatterns = [
     #path('editar/', LoginView.as_view(templ), name="editar"),
     path('entrar/', LoginView.as_view(template_name='contas/login.html'), name="entrar"),
     path('cadastre-se/', register, name="registrar"),
-    path('editar/', LoginView, name="editar"),
+    path('editar/', editar, name="editar"),
+    path('editar-senha/', editar_senha, name="editar_senha"),
     path('sair/', LogoutView.as_view(next_page='core:home'), name="sair")
 ]
 

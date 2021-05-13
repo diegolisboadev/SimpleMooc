@@ -4,7 +4,7 @@ from django.contrib.auth import authenticate, login
 from django.conf import settings
 from django.contrib.auth.decorators import login_required
 
-from .forms import RegisterForm, EditAccountForm
+from .forms import RegisterForm, EditAccountForm, PasswordChangeForm
 
 # Create your views here.
 def register(request):
@@ -30,4 +30,27 @@ def dashboard(request):
 
 @login_required
 def editar(request):
-    return render(request, 'contas/editar.html', {'form': EditAccountForm()})
+    context = {}
+    if request.method == 'POST':
+        form = EditAccountForm(request.POST, instance=request.user)
+        if form.is_valid():
+            form.save()
+            form = EditAccountForm(instance=request.user)
+            context['success'] = True
+    else:
+        form = EditAccountForm(instance=request.user)
+    context['form'] = form
+    return render(request, 'contas/editar.html', context)
+
+@login_required
+def editar_senha(request):
+    context = {}
+    if request.method == 'POST':
+        form = PasswordChangeForm(data=request.POST, user=request.user)
+        if form.is_valid():
+            form.save()
+            context['success'] = True
+    else:
+        form = PasswordChangeForm(user=request.user)
+    context['form'] = form    
+    return render(request, 'contas/editar_senha.html', context)
