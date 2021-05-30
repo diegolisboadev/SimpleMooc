@@ -1,10 +1,16 @@
 from django.shortcuts import render, redirect
 #from django.contrib.auth.forms import UserCreationForm
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, get_user_model
 from django.conf import settings
 from django.contrib.auth.decorators import login_required
 
-from .forms import RegisterForm, EditAccountForm, PasswordChangeForm
+from simplemooc.core.utils import generate_hash_key
+
+from .forms import RegisterForm, EditAccountForm, PasswordChangeForm, PasswordResetForm
+from .models import PasswordReset
+
+# User recebendo -> Model CustomUser
+User = get_user_model()
 
 # Create your views here.
 def register(request):
@@ -23,6 +29,17 @@ def register(request):
         form = RegisterForm()
 
     return render(request, 'contas/register.html', {'form': form})
+
+def password_reset(request):
+    form = PasswordResetForm(request.POST or None)
+    if form.is_valid():    
+        user = User.objects.get(email=form.cleaned_data['email'])
+        reset = PasswordReset(key = generate_hash_key(user.username), user = user.username)
+        reset.save()
+
+
+    # request.POST or None -> Quando for vazio não será validado o form
+    return render(request, 'contas/password_reset.html', { 'form': form })
 
 @login_required
 def dashboard(request):

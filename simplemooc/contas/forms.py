@@ -1,32 +1,67 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm, PasswordChangeForm
-from django.contrib.auth.models import User
+#from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model
+from django.forms import fields
 
-class RegisterForm(UserCreationForm):
+User = get_user_model()
+
+class PasswordResetForm(forms.Form):
+    email = forms.EmailField(label='Email')
+
+    # Validar Email - Já Cadastrado True or False
+    def clean_email(self):
+        email = self.cleaned_data['email']
+        if User.objects.filter(email=email).exists():
+            return email
+        return forms.ValidationError(
+            "Nenhum usuário encontrado com este email!"
+        )
+
+class RegisterForm(forms.ModelForm): # UserCreationForm
     """
         Customização do Form de Registro
         (Criando o próprio form de registro)
     Args:
         UserCreationForm ([type]): [description]
     """
-    email = forms.EmailField(label='Email')
+    # email = forms.EmailField(label='Email')
+    password1 = forms.CharField(label='Senha', widget=forms.PasswordInput)
+    password2 = forms.CharField(label='Confirmação de senha', widget=forms.PasswordInput)
+
+    #
+    def cleaned_password(self):
+        password1 = self.cleaned_data.get("password1")
+        password2 = self.cleaned_data.get("password2")
+
+        if password1 and password2 and password1 != password2:
+            raise forms.ValidationError(
+                'A confirmação não está correta',
+                code='password_mismatch'
+            )
+        return password2
 
     # clean_algumcampo
     # Metodo para validar o campo email buscando se o mesmo já existe ou não
     # também para manipular determinado campo ao salvar e/ou validar
-    def clean_email(self):
+    '''def clean_email(self):
         email = self.cleaned_data['email']
         if User.objects.filter(email=email).exists():
             raise forms.ValidationError('Já existe usuário com este E-mail')
-        return email
+        return email'''
 
     # Sobrescreve o metodo save() do UserCreationForm para o RegisterForm
     def save(self, commit=True):
         user = super(RegisterForm, self).save(commit=False)
-        user.email = self.cleaned_data['email']
+        #user.email = self.cleaned_data['email']
+        user.set_password(self.cleaned_data['password1'])
         if commit:
             user.save()
         return user
+
+    class Meta:
+        model = User
+        fields = ['username']
 
 class EditAccountForm(forms.ModelForm):
     """ModelForm - serve para gerar um form automaticamente
@@ -37,7 +72,7 @@ class EditAccountForm(forms.ModelForm):
     Args:
         forms ([type]): [description]
     """
-    def clean_email(self):
+    '''def clean_email(self):
         """ Clean campo email 
             metodo para validar o email
             caso existar em algum registro 
@@ -51,8 +86,8 @@ class EditAccountForm(forms.ModelForm):
         email = self.cleaned_data['email']
         if User.objects.filter(email=email).exclude(pk=self.instance.pk).exists():
             raise forms.ValidationError('Já existe usuário com este E-mail')
-        return email
+        return email'''
 
     class Meta:
         model = User
-        fields = ['username', 'email', 'first_name', 'last_name']
+        fields = ['username', 'email'] # 'first_name', 'last_name'

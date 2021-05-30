@@ -9,7 +9,9 @@
         <div class="pure-u-1">
             <h2>Informe seus dados de Login</h2>
             <form class="pure-form pure-form-stacked" method="post">
+
                 {% csrf_token %}
+                
                 <fieldset>
                     {{ form.non_field_errors }}<!--Mostrar todos os erros no campos - caso houver-->
 
@@ -28,7 +30,7 @@
                 </fieldset>
                 <p>
                     Não é cadastrado? <a href="{% url 'contas:registrar' %}" title="Cadastra-se">Cadastre-se</a> <br />
-                    Esqueceu a senha? <a href="#" title="Alterar Senha">Nova senha</a> <br />
+                    Esqueceu a senha? <a href="{% url 'contas:resetar_senha' %}" title="Alterar Senha">Nova senha</a> <br />
                 </p>
             </form>
         </div>

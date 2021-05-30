@@ -35,6 +35,8 @@
                     <strong>Bem-vindo</strong>, {{ user|title }}
                     <br>
                     <strong>Email </strong>, {{ user.email }}
+                    <br>
+                    <strong>Último Login: {{ user.last_login }}</strong>
                 {% endblock dashboard_content %}
             </div>
         </div>
