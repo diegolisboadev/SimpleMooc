@@ -2,12 +2,27 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm, PasswordChangeForm
 #from django.contrib.auth.models import User
 from django.contrib.auth import get_user_model
-from django.forms import fields
+from .models import PasswordReset
+from core.utils import generate_hash_key
+from core.mail import send_mail_template
+
 
 User = get_user_model()
 
 class PasswordResetForm(forms.Form):
     email = forms.EmailField(label='Email')
+
+    def save(self):
+        user = User.objects.get(email=self.cleaned_data['email'])
+        key = generate_hash_key(user.username)
+        reset = PasswordReset(key=key, user=user)
+        reset.save()
+        
+        # Envio do Email
+        template_name = 'contas/password_reset_email.html'
+        subject = 'Criar nova senha no SimpleMooc'
+        context = { 'reset': reset }
+        send_mail_template(subject, template_name, context, [user.email])
 
     # Validar Email - Já Cadastrado True or False
     def clean_email(self):

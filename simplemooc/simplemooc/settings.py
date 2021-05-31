@@ -37,11 +37,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    
     'clear_cache',
     'core',
+    'contas',
     'cursos',
-    'contas'
 ]
 
 MIDDLEWARE = [
@@ -145,10 +144,10 @@ LOGOUT_URL = 'contas:logout' # Define a rota de logout da aplicação
 #EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 DEFAULT_FROM_MAIL = 'Nome <email@gmail.com>'
-EMAIL_USE_TLS = True
+'''EMAIL_USE_TLS = True
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_HOST_USER = 'email@gmail.com'
 EMAIL_HOST_PASSWORD = 'senha'
-EMAIL_PORT = 587
+EMAIL_PORT = 587'''
 
 CONTACT_EMAIL = 'contato@simplemooc.com.br'

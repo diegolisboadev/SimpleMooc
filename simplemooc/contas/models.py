@@ -1,3 +1,4 @@
+#from contas.forms import User
 from typing import cast
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, UserManager
