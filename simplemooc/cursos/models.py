@@ -1,4 +1,8 @@
+from enum import unique
+from random import choices
+from django.conf import settings
 from django.db import models
+from django.db.models.deletion import CASCADE
 
 # Create your models here.
 
@@ -44,3 +48,33 @@ class Cursos(models.Model):
         verbose_name = 'Curso'
         verbose_name_plural = 'Cursos' 
         ordering = ['nome'] # Ordernar os dados na tabela de cursos em ordem crescente -name (orderDesc)
+
+class Inscricao(models.Model):
+
+    STATUS_CHOICES = (
+        (0, 'Pendente'),
+        (1, 'Aprovado'),
+        (2, 'Cancelado')
+    )
+
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL, 
+        verbose_name='Inscrição', 
+        related_name='inscricao',
+        on_delete=CASCADE
+    )
+
+    curso = models.ForeignKey(Cursos, verbose_name='Curso', related_name="curso", on_delete=CASCADE)
+    status = models.IntegerField('Situação', choices=STATUS_CHOICES, default=1, blank=True)
+    created_at = models.DateTimeField('Criado em', auto_now_add=True)
+    updated_at = models.DateTimeField('Atualizado em', auto_now=True)
+
+    def ativo(self):
+        self.status = 1
+        self.save()
+
+    class Meta:
+        verbose_name = 'Inscrição'
+        verbose_name_plural = 'Inscrições'
+        unique_together = (('user', 'curso'))
+        # Campos unicos no BD -> Não permite 2 cursos iguais para o mesmo usuário na relação

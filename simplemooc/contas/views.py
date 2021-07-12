@@ -5,6 +5,7 @@ from django.contrib.auth.forms import (
 from django.contrib.auth import authenticate, login, get_user_model
 from django.conf import settings
 from django.contrib.auth.decorators import login_required
+from django.contrib import messages
 
 from core.utils import generate_hash_key
 
@@ -35,11 +36,12 @@ def register(request):
 def password_reset(request):
     form = PasswordResetForm(request.POST or None)
     if form.is_valid():    
-        #user = User.objects.get(email=form.cleaned_data['email'])
-        #reset = PasswordReset(key = generate_hash_key(user.username), user = user.username)
-        form.save()
+        user = User.objects.get(email=form.cleaned_data['email'])
+        reset = PasswordReset(key = generate_hash_key(user.username), user = user)
+        reset.save()
+        success = True
     # request.POST or None -> Quando for vazio não será validado o form
-    return render(request, 'contas/password_reset.html', { 'form': form })
+    return render(request, 'contas/password_reset.html', { 'success': success, 'form': form })
 
 def password_reset_confirm(request, key):
     template_name = 'contas/password_reset_confirm.html'
@@ -63,8 +65,8 @@ def editar(request):
         form = EditAccountForm(request.POST, instance=request.user)
         if form.is_valid():
             form.save()
-            form = EditAccountForm(instance=request.user)
-            context['success'] = True
+            messages.success(request, 'Os dados da sua conta foram alterados com sucesso!')
+            return redirect('contas:dashboard')
     else:
         form = EditAccountForm(instance=request.user)
     context['form'] = form

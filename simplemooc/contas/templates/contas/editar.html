@@ -9,9 +9,6 @@
 {% block dashboard_content %}
         <div class="inner">
             <form class="pure-form pure-form-stacked" method="POST">
-                {% if success %}
-                    <span>Os dados foram alterados com sucesso!</span>
-                {% endif %}
                 {% csrf_token %}
                     {{ form.non_field_errors }} <!-- Erros não associados a nenhum campo do form (Não dispara) -->
                     {% for f in form  %}

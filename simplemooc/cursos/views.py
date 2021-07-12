@@ -1,5 +1,7 @@
-from django.shortcuts import render, get_object_or_404
-from .models import Cursos
+from django.contrib.auth.decorators import login_required
+from django.contrib import messages
+from django.shortcuts import render, get_object_or_404, redirect
+from .models import Cursos, Inscricao
 from .forms import ContatoCursoForm
 
 # Create your views here.
@@ -24,3 +26,14 @@ def detalhes_curso(request, slug): #pk
             'curso': curso,
             'formContato': formContato
     }) #pk=pk
+
+@login_required
+def inscricao(request, slug):
+    curso = get_object_or_404(Cursos, slug=slug)
+    inscricao, criacao = Inscricao.objects.get_or_create(user=request.user, curso=curso)
+    if criacao:
+        messages.success(request, 'Você foi inscrito no Curso!')
+    else:
+        messages.info(request, 'Você já está inscrito nesse Curso!')
+    # inscricao.ativo()
+    return redirect('contas:dashboard')
