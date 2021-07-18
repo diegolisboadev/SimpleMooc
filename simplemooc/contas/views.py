@@ -8,6 +8,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 
 from core.utils import generate_hash_key
+from cursos.models import Inscricao
 
 from .forms import RegisterForm, EditAccountForm, PasswordChangeForm, PasswordResetForm
 from .models import PasswordReset
@@ -56,7 +57,7 @@ def password_reset_confirm(request, key):
 
 @login_required
 def dashboard(request):
-    return render(request, 'contas/dashboard.html')
+    return render(request, 'contas/dashboard.html', {'inscricoes': Inscricao.objects.filter(user=request.user)})
 
 @login_required
 def editar(request):

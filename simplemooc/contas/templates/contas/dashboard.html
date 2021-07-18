@@ -1,5 +1,7 @@
 {% extends "base.html" %}
 
+{% load cursos_tags %} {# Chamar as templatetags dos cursos #}
+
 {% block titulo %}Minha Área{% endblock titulo %}
 
 {% block conteudo %}
@@ -13,33 +15,60 @@
             </ul>
         </div>
         <div class="pure-menu custom-restricted-width">
-            <span class="pure-menu-heading">Minha Área</span>
+            <span class="pure-menu-heading"> <i class="fa fa-user"></i> Minha Área</span>
+                <hr>
+                <ul class="pure-menu-list">
+                    <li class="pure-menu-item"><strong>Bem-vindo</strong>, {{ user|title }}</li>
+                    <hr>
+                    <li class="pure-menu-item"><strong>Email </strong>, {{ user.email }}</li>
+                    <hr>
+                    <li class="pure-menu-item"><strong>Último Login:</strong> {{ user.last_login }}</li>
+                    <hr>
+                </ul>
+            <span class="pure-menu-heading"> <i class="fa fa-university"></i> Meus Cursos</span>
+            <hr>
             <ul class="pure-menu-list">
-                <li class="pure-menu-heading">Meus Cursos</li>
+                {% my_cursos user %}
+                <!-- {# {% load_my_cursos user as inscricoes %} #}
+                {# {% for inscricao in inscricoes %}
+                    <li class="pure-menu-item">
+                        <a href="#" class="pure-menu-link">{{ inscricao.curso }}</a>
+                    </li>
+                {% empty %}
+                    <li>Você não está inscrito em nenhum Curso!</li>
+                {% endfor %} #} -->
+                <li class="pure-menu-heading"><i class="fa fa-user-circle"></i> Conta</li>
+                <hr>
                 <li class="pure-menu-item">
-                    <a href="#" class="pure-menu-link">Games</a>
+                   <a href="{% url 'contas:editar' %}" class="pure-menu-link"> <i class="fa fa-cog"></i>  Editar Conta</a>
                 </li>
-                <li class="pure-menu-heading">Conta</li>
+                <hr>
                 <li class="pure-menu-item">
-                    <a href="{% url 'contas:editar' %}" class="pure-menu-link">Editar Conta</a>
-                </li>
-                <li class="pure-menu-item">
-                    <a href="{% url 'contas:editar_senha' %}" class="pure-menu-link">Editar Senha</a>
+                    <a href="{% url 'contas:editar_senha' %}" class="pure-menu-link"><i class="fa fa-lock"></i>  Editar Senha</a>
                 </li>
             </ul>
         </div>
         <div class="pure-u-2-3">
             <div class="inner">
                 {% block dashboard_content %}
-                    <strong>Bem-vindo</strong>, {{ user|title }}
-                    <br>
-                    <strong>Email </strong>, {{ user.email }}
-                    <br>
-                    <strong>Último Login: {{ user.last_login }}</strong>
+                    <h2>Meus Cursos</h2>
+                    {% for inscricao in inscricoes %}
+                        <div class="well">
+                            <h3>{{ inscricao.curso }} {{ inscricao.curso.data_inicio|date:'d/m/Y'|default:'Sem data' }}</h3>
+                            <p>{{ inscricao.curso.descricao|linebreaks }}</p>
+                            <div class="pure-controls">
+                                <a href="#" class="pure-button pure-button-primary">Acessar</a>
+                                <a href="#" class="pure-button button-error">Cancelar</a>
+                            </div>
+                        </div>
+                    {% empty %}
+                        <aside class="pure-u-1">
+                            <p>Nenhum curso inscrito!</p>
+                        </aside>
+                    {% endfor %}
                 {% endblock dashboard_content %}
             </div>
         </div>
     </div>
-
 
 {% endblock conteudo %}
